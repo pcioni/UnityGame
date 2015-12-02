@@ -33,12 +33,15 @@ public class cameraController : MonoBehaviour {
 		
 		if( Physics.Raycast( ray, out hit, 100 ) ) {
 			GameObject hitObject = hit.transform.gameObject;
-			orbitTarget = hitObject;
-			Camera.main.transform.position = hitObject.transform.position;
-			Camera.main.transform.rotation = hitObject.transform.rotation;
-			Camera.main.transform.Translate(2, 0, 0);
+			if (orbitTarget != hitObject) {
+				orbitTarget.GetComponent<objectHighlightOnMouseover>().deselect();
+				orbitTarget = hitObject;
+				orbitTarget.GetComponent<objectHighlightOnMouseover>().select();
+				Camera.main.transform.position = hitObject.transform.position;
+				Camera.main.transform.rotation = hitObject.transform.rotation;
+				Camera.main.transform.Translate(2, 0, 0);
+			}
 		}
-		
 	}
 	
 	//Orbit around orbitTarget's X-axis
@@ -54,6 +57,7 @@ public class cameraController : MonoBehaviour {
 
 	// Basically zoomInToTarget() on originPlanet
 	void resetCameraToOrigin() {
+		orbitTarget.GetComponent<objectHighlightOnMouseover>().deselect();
 		orbitTarget = originPlanet;
 		Camera.main.transform.position = originPlanet.transform.position;
 		Camera.main.transform.rotation = originPlanet.transform.rotation;
