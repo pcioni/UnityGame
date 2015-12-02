@@ -1,0 +1,161 @@
+Upon Start
+
+Sunday: December 1st
+As the Sun rises over Christmas Town, a small population comes to life. 
+The children of the village look outside - there's snow on the ground! It's Christmas Season!
+In the center of Town, the villagers plant a small tree, and begin their yearly tradition.
+Each year, the villagers of Christmas Town decorate their tree with lights, ornaments, and other decorations.
+As more decorations go on the tree, the tree will grow, spreading Christmas cheer across the world!
+This year, it's your turn to be in charge of the tree's growth. Christmas Town is depending on you, so spread Christmas cheer far and wide!
+
+
+Monday: December 2nd
+One day has passed, and your tree is already showing signs of growth!
+The Mayor of Christmas Town has a gift for you, a Calendar!
+Each day, you can claim a gift from the Calendar to help with the growth of your tree! Try claiming your first two gifts!
+
+Upon claiming December 1 Gift: You open the first gift box, and inside is a bundle of Ornaments!
+Upon claiming December 2 Gift: Looking inside the second gift box, you find a Stocking, with your name on it!
+
+
+Tuesday: December 3rd
+As the villagers of Christmas Town wake up for another busy day, they are delighted to see that the tree is now taller than you!
+Up until now, you have only been able to decorate your tree with Ornaments, but you hear that the Light Factory is set to reopen tomorrow.
+
+Upon claiming December 3 Gift: You open the third gift box, and a seemingly endless supply of Tinsel erupts out of it! Quickly, cover as much of the tree as you can!
+
+
+Wednesday: December 4th
+As you begin preparations to continue to decorate the tree, one of the villagers comes running towards you.
+Bad news! The Light Factory is having problems! Go check it out!
+
+After fixing Light Factory: The head of the Light Factory thanks you for your trouble, and presents you with a string of Lights!
+Starting tomorrow, the Factory will provide you with a daily supply of Lights to put on the tree!
+
+Upon claiming December 4 Gift: Inside the fourth gift box, you find a Generator! You will be able to plug your lights into the Generator to provide light to the tree!
+
+
+Thursday: December 5th
+As expected, the Light Factory has delivered you a small supply of Lights to put on the tree today!
+From what you can tell, Christmas cheer has spread across the entire village! 
+Word of your efforts begins to travel outside of Christmas Village.
+
+Upon claiming December 5 Gift: Inside the fifth gift box, you find a stash of Ornaments!
+
+
+Friday: December 6th
+The next morning, you wake up to see that the tree has grown even more! The tree is now the size of the closest building!
+At the base of the tree, you find your daily supply of Lights. Inside the box, there's a note. 
+"Thank you for your assistance the other day! Without your help, these lights wouldn't be working at all!
+Feel free to come and help out any time!"
+
+Upon claiming December 6 Gift: The sixth gift box erupts open with another surge of Tinsel! Quickly, cover as much of the tree as you can!
+
+
+Saturday: December 7th
+A beautiful Saturday morning, and you receive wonderful news! Nearby towns are sending supplies to help spread Christmas cheer!
+You find multiple gifts by the tree, containing Ornaments, Lights, and a Stocking!
+You also receive word that the nearby Ornament Factory is looking for extra help, so check it out!
+
+Upon claiming December 7 Gift: Inside the seventh gift box is a strange Ornament, with the year on it!
+
+Sunday: December 8th
+A week has now passed, and the tree is beginning to become too large for Christmas Town! 
+Luckily, the villagers are prepared for this. They begin to move their houses outwards, away from the base of the tree.
+You find your supplies from the Factories, and get to work!
+
+Upon claiming December 8 Gift: This time, you find a String of Rainbow Lights! 
+
+
+Monday: December 9th
+With the help of the surrounding villages, the tree is starting to grow at an incredible rate!
+Overnight, the tree has taken over the surrounding villages!
+Nearby Factories have been alerted to the growth of the tree, and are lending their support towards the spread of Christmas cheer!
+
+Upon claiming December 9 Gift: The ninth gift box has an Ornament you have never seen before. This one looks like it can play music!
+
+Tuesday: December 10th
+
+
+Wednesday: December 11th
+
+
+Thursday: December 12th
+
+
+Friday: December 13th
+
+
+Saturday: December 14th
+
+
+Sunday: December 15th
+
+
+Monday: December 16th
+
+
+Tuesday: December 17th
+
+
+Wednesday: December 18th
+
+
+Thursday: December 19th
+
+
+Friday: December 20th
+
+
+Saturday: December 21st
+
+
+Sunday: December 22nd
+
+
+Monday: December 23rd
+
+
+Tuesday: December 24th
+
+
+Wednesday: Christmas Day
+
+
+Object Descriptions
+NOTE: These descriptions pop up the first time you get an Object
+
+Ornaments
+You've received a Red Ornament! Certainly an attention grabber, placing this ornament on the tree will provide a small boost in Christmas cheer. 
+You've received a Green Ornament! Even though it blends in with the tree, it doesn't go unnoticed. Placing this ornament on the tree will provide a small boost in Christmas Cheer.
+You've received a White Ornament! This one shines as bright as the snow on the ground! Placing this ornament on the tree will provide a small boost in Christmas cheer.
+You've received a Yearly Ornament! These only come out once a year, so this one is brand new! Placing this ornament on the tree will provide an average boost in Christmas Cheer.
+You've received a Novelty Ornament! This ornament has been placed on the tree every year as long as the villagers can remember. Placing this ornament on the tree will provide a large boost in Christmas cheer!
+You've received a Musical Ornament! Resembling the shape of a record player, it plays a variety of festive music! Placing this ornament on the tree will provide a large boost in Christmas cheer!
+
+Lights
+You've received some Bright Lights! This string of lights shines bright in the night, making the tree visible from far away! Placing these lights on the tree will provide an average boost in Christmas cheer.
+You've received some Rainbow Lights! How Colorful! Placing these lights on the tree will provide an average boost in Christmas cheer. 
+You've received some Flashing Lights! These lights flash between different colors, grabbing the attention of many! Placing these lights on the tree will provide an average boost in Christmas cheer.
+
+
+Stockings
+You've received a Red Stocking! The traditional decoration, placing this on the tree will provide a small boost in Christmas cheer.
+You've received a Custom Stocking! One of your friends made this for you! Placing this on the tree will provide an average boost in Christmas cheer.
+You've received a Fancy Stocking! Someone must have spent a long time making this. Placing this on the tree will provide a large boost in Christmas cheer!
+
+
+
+
+
+
+
+
+Flavor Text
+
+Tree Decorating
+This is your tree. By placing Decorations, such as Ornaments and Lights on it, the tree will grow, and Christmas cheer will spread across the world!
+
+
+Minigame Prompts
+
