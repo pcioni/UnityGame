@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fa423599b1a5f274393e8bfc9ac4e428
-timeCreated: 1449085178
+guid: 9a9ae3b8102cfb845b80f2a49b95d859
+timeCreated: 1449185134
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pTorus2
+    4300000: pCube1
   materials:
     importMaterials: 1
     materialName: 0
@@ -40,7 +40,7 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 0
+    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
