@@ -75,10 +75,16 @@ Nearby Factories have been alerted to the growth of the tree, and are lending th
 Upon claiming December 9 Gift: The ninth gift box has an Ornament you have never seen before. This one looks like it can play music!
 
 Tuesday: December 10th
+Thankfully, the trunk of the tree has stopped growing. However, the canopy of the tree is becoming enormous!
+More factories are opening up to lend you support, as Christmas cheer is rapidly spreading across the whole world!
 
+Upon claiming December 10 Gift: As you open the tenth gift, a strong spray of Tinsel emerges from the box! Quickly, cover the tree!
 
 Wednesday: December 11th
+The growth of the tree is speeding up, faster than you could have ever imagined!
+Factories are in a panic, wanting to help out however they can. Christmas cheer has spread to almost the entire world!
 
+Upon claiming December 11 Gift: Inside the eleventh gift box, you find a large stash of Ornaments!
 
 Thursday: December 12th
 
@@ -143,11 +149,6 @@ Stockings
 You've received a Red Stocking! The traditional decoration, placing this on the tree will provide a small boost in Christmas cheer.
 You've received a Custom Stocking! One of your friends made this for you! Placing this on the tree will provide an average boost in Christmas cheer.
 You've received a Fancy Stocking! Someone must have spent a long time making this. Placing this on the tree will provide a large boost in Christmas cheer!
-
-
-
-
-
 
 
 
