@@ -27,6 +27,7 @@ public class cameraController : MonoBehaviour {
 	 * Shoot a raycast from our camera to our mouse location. 
 	 *   If we hit an object, move our camera into it and offset it outside the object.
 	 */
+
 	void zoomInOnTarget() {
 		Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
 		RaycastHit hit;
@@ -37,12 +38,29 @@ public class cameraController : MonoBehaviour {
 				orbitTarget.GetComponent<objectHighlightOnMouseover>().deselect();
 				orbitTarget = hitObject;
 				orbitTarget.GetComponent<objectHighlightOnMouseover>().select();
-				Camera.main.transform.position = hitObject.transform.position;
+				Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, hitObject.transform.position, );
+				//Camera.main.transform.position = hitObject.transform.position;
 				Camera.main.transform.rotation = hitObject.transform.rotation;
 				Camera.main.transform.Translate(2, 0, 0);
 			}
 		}
 	}
+	/*
+	public Transform startMarker;
+    public Transform endMarker;
+    public float speed = 1.0F;
+    private float startTime;
+    private float journeyLength;
+    void Start() {
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
+    }
+    void Update() {
+        float distCovered = (Time.time - startTime) * speed;
+        float fracJourney = distCovered / journeyLength;
+        transform.position = Vector3.Lerp(startMarker.position, endMarker.position, fracJourney);
+    }
+    */
 	
 	//Orbit around orbitTarget's X-axis
 	void orbitCamera() {
