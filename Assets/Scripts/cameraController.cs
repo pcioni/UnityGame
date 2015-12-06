@@ -3,28 +3,28 @@ using System.Collections;
 
 public class cameraController : MonoBehaviour {
 	
+	public float sensitivity  = 0.0f;
+	public float speed = 0.0f;
+	public float distanceFromZoomTarget = 0;  // how far from orbitTarget lerp stops
+
 	private float minFov = 60.0f;
 	private float maxFov = 120.0f;
-	public float sensitivity  = 0.0f;
-	
-	public float speed;
+
 	private GameObject orbitTarget;
-	
 	private GameObject originPlanet;
-	
+
 	private Vector3 lookPos;
 	private Quaternion rotation;
+	private Quaternion lookAtAngle;           // target slerp angle
+	private Vector3 relativePos;              // relative camera position from OrbitTarget
 
-	private float startTime;
-	private float journeyLength;
-	private Transform startMarker;
+	private float startTime;                  // time our lerp begins
+	private float journeyLength;			  // distance between both lerp objects
+	private Transform startMarker;            
 	private Transform endMarker;
-	private Quaternion lookAtAngle;
-	private Vector3 relativePos;
-	private Vector3 lerpVector;
-	public float distanceFromZoomTarget = 0;
+	private Vector3 lerpVector;               // point on a line to lerp to.
 
-	private bool canRotateCamera;
+	private bool canRotateCamera; // don't allow rotation during Lerp / Slerp.
 	
 	Vector3 camSmoothDampV; 
 	
@@ -57,19 +57,21 @@ public class cameraController : MonoBehaviour {
 				lookPos = orbitTarget.transform.position - Camera.main.transform.position;
 				rotation = Quaternion.LookRotation(lookPos);
 
+				//keeps track of our lerp distance
 				endMarker = orbitTarget.transform;
 				startMarker = transform;
 				startTime = Time.time;
 				journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
 
+				//slerp smoothly
 				relativePos = orbitTarget.transform.position - transform.position;
 				lookAtAngle = Quaternion.LookRotation(relativePos);
 
+				//Get a normalized vector projected towards orbitTarget
 				lerpVector = endMarker.position - startMarker.position;
 				lerpVector = lerpVector.normalized;
 
 				StartCoroutine("smoothDampToPlanet");
-				
 			}
 		}
 	}    
@@ -82,7 +84,6 @@ public class cameraController : MonoBehaviour {
 				orbitTarget.transform.up,
 				Input.GetAxis("Mouse X") * speed);
 		}
-		//transform.LookAt(orbitTarget.transform, orbitTarget.transform.up);
 	}
 	
 	// Basically zoomInToTarget() on originPlanet
@@ -98,7 +99,15 @@ public class cameraController : MonoBehaviour {
 		StartCoroutine("smoothDampToPlanet");
 	}
 
-	// Lerp from the camera position to slightly in front of the orbitTarget
+	/*
+	 * Slerp from the camera's current rotation to lookAtAngle, a Quaternion
+	 *   made in zoomInOnTarget.
+	 * 
+	 * For lerp, we draw a line from the main camera to orbitTarget using a 
+	 *   normalized vector made in zoomInOnTarget. We move along this line 
+	 *   up until we're distanceFromZoomTarget from orbitTarget's origin. 
+	 *   Our lerp destination matches the camera's 'y' position to orbitTarget's.
+	 */ 
 	IEnumerator smoothDampToPlanet() {
 		canRotateCamera = false;
 		for (float f = 0.0f; f <= 1f; f += .02f) {
@@ -133,7 +142,6 @@ public class cameraController : MonoBehaviour {
 			resetCameraToOrigin();
 		}
 
-		transform.rotation = new Quaternion(0.0f, transform.rotation.y, 0.0f, transform.rotation.w);
 
 		orbitCamera ();
 	
