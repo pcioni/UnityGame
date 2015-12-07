@@ -38,7 +38,7 @@ public class cameraController : MonoBehaviour {
 				orbitTarget.GetComponent<objectHighlightOnMouseover>().deselect();
 				orbitTarget = hitObject;
 				orbitTarget.GetComponent<objectHighlightOnMouseover>().select();
-				Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, hitObject.transform.position, );
+				//Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, hitObject.transform.position, );
 				//Camera.main.transform.position = hitObject.transform.position;
 				Camera.main.transform.rotation = hitObject.transform.rotation;
 				Camera.main.transform.Translate(2, 0, 0);
