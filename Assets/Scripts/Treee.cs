@@ -64,10 +64,5 @@ public class Treee : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision decor){
-		Debug.Log ("Hit");
-		decor.gameObject.transform.SetParent(gameObject.transform);
-		Destroy (decor.rigidbody);
 
-	}
 }
