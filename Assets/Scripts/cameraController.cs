@@ -76,14 +76,27 @@ public class cameraController : MonoBehaviour {
 			}
 		}
 	}    
-	
-	//Orbit around orbitTarget's X-axis
+
+	// H-A-T-E, this is what stress does to me!
+	float clampAngle(float angle, float min, float max) {
+		
+		if (angle < 90 || angle > 270){     // if angle in the critical region
+			if (angle > 180) angle -= 360;  //   convert all angles to -180..+180
+			if (max > 180) max -= 360;
+			if (min > 180) min -= 360;
+		}    
+		angle = Mathf.Clamp(angle, min, max);
+		if (angle < 0) angle += 360;        // if angle negative, convert to 0..360
+		return angle;
+	}
+
+	//Orbit around orbitTarget's X-axis. Allows full 360 degree movement.
 	void orbitCamera() {
 		if (Input.GetMouseButton(1) && canRotateCamera) {
-			transform.RotateAround(
-				orbitTarget.transform.position,
-				orbitTarget.transform.up,
-				Input.GetAxis("Mouse X") * speed);
+			transform.RotateAround( orbitTarget.transform.position, orbitTarget.transform.up, Input.GetAxis("Mouse X") * speed);
+
+			Vector3 cross = Vector3.Cross(transform.forward, transform.up);
+			transform.RotateAround( orbitTarget.transform.position, cross, Input.GetAxis("Mouse Y") * speed);
 		}
 	}
 	
