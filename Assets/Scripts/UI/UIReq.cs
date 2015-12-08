@@ -8,11 +8,11 @@ public class UIReq : MonoBehaviour {
 	public double SpawnRate = 10.0;
 
 	public double TimeUntilNext = 0.0;
-	public readonly string FactoryName = "New Factory";
+	public string FactoryName = "New Factory";
 	[TextArea(3,10)]
-	public readonly string Description = "Talk about yourself!";
+	public string Description = "Talk about yourself!";
 	[TextArea(3,10)]
-	public readonly string FlavorText = "Talk about yourself SOME MORE!";
+	public string FlavorText = "Talk about yourself SOME MORE!";
 	
 	CountDisplay SpawnObject = null;
 

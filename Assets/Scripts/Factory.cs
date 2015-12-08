@@ -21,4 +21,10 @@ public class Factory : MonoBehaviour {
 			info.text = "Got Me";
 		}
 	}
+
+	void OnCollisionEnter(Collision decor){
+		Debug.Log ("Hit");
+		gameObject.transform.SetParent(decor.gameObject.transform);
+		//Destroy (decor.rigidbody);
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Treee : MonoBehaviour {
@@ -10,13 +11,21 @@ public class Treee : MonoBehaviour {
 	public float z_scale;
 	float sink;
 	public float c;
+	bool clicked;
+
+	public Button start;
 	//public float b;
-	// Use this for initialization
+
 	void Start () {
-		tree = GameObject.Find ("tree");
+		//tree = GameObject.Find ("tree");
 		time_passed = 0f;
 		sink = 0f;
 		total_time = 0f;
+		start.onClick.AddListener (delegate () {
+			this.ButtonClicked ();
+		});
+
+		clicked = false;
 	}
 	
 	// Update is called once per frame
@@ -24,10 +33,10 @@ public class Treee : MonoBehaviour {
 		if (total_time < 20) {
 			if (time_passed > 2) {
 				
-				tree.gameObject.transform.localScale += new Vector3 (x_scale, y_scale, z_scale);
+				gameObject.transform.localScale += new Vector3 (x_scale, y_scale, z_scale);
 				time_passed = 0f;
 				
-				if (tree.gameObject.transform.localScale.y < (x_scale * c +1f)){
+				if (gameObject.transform.localScale.y < (x_scale * c +1f)){
 					sink = tree.gameObject.transform.localScale.y*3;
 				}else{
 					//sink = b;
@@ -40,5 +49,20 @@ public class Treee : MonoBehaviour {
 			}
 			
 		}
+
+
 	}
+
+	void ButtonClicked() {
+		if (!clicked) {
+			clicked = true;
+			Time.timeScale = 0.0f;
+
+		} else {
+			clicked = false;
+			Time.timeScale = 1.0f;
+		}
+	}
+
+
 }
