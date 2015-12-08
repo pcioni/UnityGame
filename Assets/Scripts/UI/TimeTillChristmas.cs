@@ -26,41 +26,38 @@ public class TimeTillChristmas : MonoBehaviour {
 	public int StartHour = 0;
 	public double StartMinute = 0.0;
 	private int DaysPassed = 0;
+	private int DayOneIndex = 0;
 
+	[TextArea(3,10)]
+	public string[] DayOneText = new string[3];
+
+	[TextArea(3,10)]
+	public string[] DayText = new string[25];
+	
 	public Text messages;
 	public Button accept;
 	
 	private Text timer;
 	private int gift_counter;
-	private string[] gifts;
 
 	// Use this for initialization
 	void Start () {
 		timer = GetComponent<Text>();
 		gift_counter = 0;
-		gifts = new string[26];
-		gifts [0] = "Ornaments";
-		gifts [1] = "Stocking";
-		gifts [2] = "Tinsel";
-		gifts [3] = "Generator";
-		gifts [4] = "Ornaments";
-		gifts [5] = "Tinsel";
-		gifts [6] = "Dated Ornament";
-		gifts [7] = "String of Rainbow Lights";
-		gifts [8] = "Musical Ornament";
-		gifts [9] = "Tinsel";
-		gifts [10] = "Ornaments";
 		accept.gameObject.SetActive (false);
 		messages.gameObject.SetActive (false);
 		accept.onClick.AddListener (delegate () {
 			this.ButtonClicked ();
 		});
 	}
-
+	private void DayOneEvent() {
+		messages.text = DayOneText[DayOneIndex];
+		DayOneIndex ++ ;
+	}
 	private void DayEvent(){
 		Time.timeScale = 0.0f;
 
-		messages.text = "Your daily present is " + gifts[DaysPassed] + "!!! (You're so lucky!)";
+		messages.text = DayText[DaysPassed];
 
 		accept.gameObject.SetActive(true);
 		messages.gameObject.SetActive (true);
@@ -70,42 +67,56 @@ public class TimeTillChristmas : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		StartMinute += Time.deltaTime * GameMinutesPerWorldSeconds;
-		while ( StartMinute >= 60.0 ) {
-			StartHour ++ ;
-			StartMinute -= 60.0;
-			if ( StartHour == 24 ) {
-				StartHour = 0;
-				StartDay ++ ;
+		if ( DaysPassed == 0 ) {
 
-				DayEvent();
+			Time.timeScale = 0.0f;
+			DayOneEvent();
+			DaysPassed = 1;
+			accept.gameObject.SetActive(true);
+			messages.gameObject.SetActive (true);
 
-				DaysPassed ++ ;
+		} else {
+			StartMinute += Time.deltaTime * GameMinutesPerWorldSeconds;
+			while ( StartMinute >= 60.0 ) {
+				StartHour ++ ;
+				StartMinute -= 60.0;
+				if ( StartHour == 24 ) {
+					StartHour = 0;
+					StartDay ++ ;
 
-				if ( StartDay == monthLen[StartMonth] ) {
-					StartDay = 0;
-					StartMonth ++ ;
-					if ( StartMonth == 12 ) {
-						StartMonth = 0;
+					DayEvent();
+
+					DaysPassed ++ ;
+
+					if ( StartDay == monthLen[StartMonth] ) {
+						StartDay = 0;
+						StartMonth ++ ;
+						if ( StartMonth == 12 ) {
+							StartMonth = 0;
+						}
 					}
 				}
 			}
+			int hrs = ( StartHour + 11 ) % 12 + 1;
+			int min = (int) StartMinute;
+			string working;
+			if ( StartHour >= 12 )
+				working = "PM";
+			else
+				working = "AM";
+			timer.text = string.Format("{0:00}:{1:00} " + working + " " + monthNames[StartMonth] + ", " + (StartDay+1).ToString(),
+			                           hrs,
+			                           min);
 		}
-		int hrs = ( StartHour + 11 ) % 12 + 1;
-		int min = (int) StartMinute;
-		string working;
-		if ( StartHour >= 12 )
-			working = "PM";
-		else
-			working = "AM";
-		timer.text = string.Format("{0:00}:{1:00} " + working + " " + monthNames[StartMonth] + ", " + (StartDay+1).ToString(),
-		                           hrs,
-		                           min);
 	}
 
 	public void ButtonClicked() {
-		Time.timeScale = 1.0f;
-		accept.gameObject.SetActive(false);
-		messages.gameObject.SetActive(false);
+		if ( DaysPassed == 1 && DayOneIndex < DayOneText.Length ) {
+			DayOneEvent();
+		} else {
+			Time.timeScale = 1.0f;
+			accept.gameObject.SetActive(false);
+			messages.gameObject.SetActive(false);
+		}
 	}
 }
