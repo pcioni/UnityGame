@@ -36,6 +36,7 @@ public class TimeTillChristmas : MonoBehaviour {
 	
 	public Text messages;
 	public Button accept;
+	public GameObject panel;
 	
 	private Text timer;
 	private int gift_counter;
@@ -46,6 +47,7 @@ public class TimeTillChristmas : MonoBehaviour {
 		gift_counter = 0;
 		accept.gameObject.SetActive (false);
 		messages.gameObject.SetActive (false);
+		panel.SetActive(false);
 		accept.onClick.AddListener (delegate () {
 			this.ButtonClicked ();
 		});
@@ -61,6 +63,7 @@ public class TimeTillChristmas : MonoBehaviour {
 
 		accept.gameObject.SetActive(true);
 		messages.gameObject.SetActive (true);
+		panel.SetActive(true);
 
 		gift_counter ++ ;
 	}
@@ -74,6 +77,7 @@ public class TimeTillChristmas : MonoBehaviour {
 			DaysPassed = 1;
 			accept.gameObject.SetActive(true);
 			messages.gameObject.SetActive (true);
+			panel.SetActive(true);
 
 		} else {
 			StartMinute += Time.deltaTime * GameMinutesPerWorldSeconds;
@@ -117,6 +121,7 @@ public class TimeTillChristmas : MonoBehaviour {
 			Time.timeScale = 1.0f;
 			accept.gameObject.SetActive(false);
 			messages.gameObject.SetActive(false);
+			panel.SetActive(false);
 		}
 	}
 }
