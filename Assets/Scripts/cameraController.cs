@@ -1,33 +1,29 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class cameraController : MonoBehaviour {
-	
-	public float sensitivity  = 0.0f;
-	public float speed = 0.0f;
-	public float distanceFromZoomTarget = 0;  // how far from orbitTarget lerp stops
+
+	public float TransitionRate = 0.02f;
+	public float sensitivity  = 5.0f;
+	public float speed = 5.0f;
+	public float distanceFromZoomTarget = 5.0f;  // how far from orbitTarget lerp stops
+
+	public objectHighlightOnMouseover selected = null;
+	private objectHighlightOnMouseover orbitTarget;
+	private objectHighlightOnMouseover originPlanet;
 
 	private float minFov = 60.0f;
 	private float maxFov = 120.0f;
-
-	private GameObject orbitTarget;
-	private GameObject originPlanet;
 
 	private Vector3 lookPos;
 	private Quaternion rotation;
 	private Quaternion lookAtAngle;           // target slerp angle
 	private Vector3 relativePos;              // relative camera position from OrbitTarget
 
-	private float startTime;                  // time our lerp begins
-	private float journeyLength;			  // distance between both lerp objects
-	private Transform startMarker;            
-	private Transform endMarker;
-	private Vector3 lerpVector;               // point on a line to lerp to.
+	private Vector3 TransitionStartPos;
+	private Vector3 TransitionEndPos;
 
 	private bool canRotateCamera; // don't allow rotation during Lerp / Slerp.
-	
-	Vector3 camSmoothDampV; 
-	
 	
 	/*
 	 * Lock the camera FOV to the scrollwheel. 
@@ -45,40 +41,19 @@ public class cameraController : MonoBehaviour {
 	 *   If we hit an object, move our camera into it and offset it outside the object.
 	 */
 	void zoomInOnTarget() {
-		Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-		RaycastHit hit;
-		
-		if( Physics.Raycast( ray, out hit, 100 ) ) {
-			GameObject hitObject = hit.transform.gameObject;
-			if (orbitTarget != hitObject) {
-				orbitTarget.GetComponent<objectHighlightOnMouseover>().deselect();
-				orbitTarget = hitObject;
-				orbitTarget.GetComponent<objectHighlightOnMouseover>().select();
+		if ( selected != null && orbitTarget != selected) {
+			if ( orbitTarget != null )
+				orbitTarget.deselect();
+			orbitTarget = selected;
+			orbitTarget.select();
 
-				//Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, hitObject.transform.position, );
-				//Camera.main.transform.position = hitObject.transform.position;
-				Camera.main.transform.rotation = hitObject.transform.rotation;
-				Camera.main.transform.Translate(2, 0, 0);
+			Vector3 offset = -Camera.main.transform.forward * distanceFromZoomTarget + orbitTarget.offsetFromCenter;
+			TransitionStartPos = Camera.main.transform.position;
+			TransitionEndPos = orbitTarget.transform.position + offset;
 
-				lookPos = orbitTarget.transform.position - Camera.main.transform.position;
-				rotation = Quaternion.LookRotation(lookPos);
+			print ( TransitionEndPos );
 
-				//keeps track of our lerp distance
-				endMarker = orbitTarget.transform;
-				startMarker = transform;
-				startTime = Time.time;
-				journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
-
-				//slerp smoothly
-				relativePos = orbitTarget.transform.position - transform.position;
-				lookAtAngle = Quaternion.LookRotation(relativePos);
-
-				//Get a normalized vector projected towards orbitTarget
-				lerpVector = endMarker.position - startMarker.position;
-				lerpVector = lerpVector.normalized;
-
-				StartCoroutine("smoothDampToPlanet");
-			}
+			StartCoroutine( smoothDampToPlanet() );
 		}
 	}    
 
@@ -107,15 +82,16 @@ public class cameraController : MonoBehaviour {
 	
 	// Basically zoomInToTarget() on originPlanet
 	void resetCameraToOrigin() {
-		orbitTarget.GetComponent<objectHighlightOnMouseover>().deselect();
+		Vector3 DeltaPosition = Camera.main.transform.position - orbitTarget.transform.position;
+
+		orbitTarget.deselect();
 		orbitTarget = originPlanet;
 
-		endMarker = orbitTarget.transform;
-		startMarker = transform;
-		startTime = Time.time;
-		journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
+		Vector3 offset = -Camera.main.transform.forward * distanceFromZoomTarget + orbitTarget.offsetFromCenter;
+		TransitionStartPos = Camera.main.transform.position;
+		TransitionEndPos = orbitTarget.transform.position + offset;
 
-		StartCoroutine("smoothDampToPlanet");
+		StartCoroutine( smoothDampToPlanet() );
 	}
 
 	/*
@@ -129,42 +105,29 @@ public class cameraController : MonoBehaviour {
 	 */ 
 	IEnumerator smoothDampToPlanet() {
 		canRotateCamera = false;
-		for (float f = 0.0f; f <= 1f; f += .02f) {
-			float distCovered = (Time.time - startTime) * speed;
-			float fracJourney = distCovered / journeyLength;
-			Vector3 lerpTo = (endMarker.position + (distanceFromZoomTarget * lerpVector));
-			Vector3 matchHeight = new Vector3(lerpTo.x, orbitTarget.transform.position.y, lerpTo.z);
-			lerpTo = matchHeight;
-			
-			transform.position = Vector3.Lerp(startMarker.position, lerpTo, fracJourney);
-			transform.rotation = Quaternion.Slerp(startMarker.rotation, lookAtAngle, Time.deltaTime * speed); // 2 = damping
+		for (float f = 0.0f; f <= 1f; f += TransitionRate) {
+			transform.position = Vector3.Lerp(TransitionStartPos, TransitionEndPos, f);
 			yield return new WaitForEndOfFrame();
 		}
 		canRotateCamera = true;
 	}
 	
 	void Start() {
-		orbitTarget = GameObject.Find ("startingPlanet");
-		originPlanet = GameObject.Find ("startingPlanet");
+		GameObject tmp = GameObject.Find("startingPlanet");
+		orbitTarget = tmp.GetComponent<objectHighlightOnMouseover>();
+		originPlanet = tmp.GetComponent<objectHighlightOnMouseover>();
 		canRotateCamera = true;
 	}
 	
 	void Update () {
-		
 		zoomInOut();
-		
 		if (Input.GetMouseButtonDown(0)) {
-			zoomInOnTarget ();
+			zoomInOnTarget();
 		}
-		
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			resetCameraToOrigin();
 		}
-
-
 		orbitCamera ();
-	
-		
 	}
 	
 	
