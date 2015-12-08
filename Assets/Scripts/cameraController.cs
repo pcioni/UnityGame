@@ -55,12 +55,10 @@ public class cameraController : MonoBehaviour {
 				orbitTarget = hitObject;
 				orbitTarget.GetComponent<objectHighlightOnMouseover>().select();
 
-
 				//Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, hitObject.transform.position, );
 				//Camera.main.transform.position = hitObject.transform.position;
 				Camera.main.transform.rotation = hitObject.transform.rotation;
 				Camera.main.transform.Translate(2, 0, 0);
-
 
 				lookPos = orbitTarget.transform.position - Camera.main.transform.position;
 				rotation = Quaternion.LookRotation(lookPos);
@@ -80,8 +78,6 @@ public class cameraController : MonoBehaviour {
 				lerpVector = lerpVector.normalized;
 
 				StartCoroutine("smoothDampToPlanet");
-
-
 			}
 		}
 	}    

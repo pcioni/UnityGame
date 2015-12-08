@@ -56,6 +56,5 @@ public class Game_Time : MonoBehaviour {
 		Time.timeScale = 1.0f;
 		accept.gameObject.SetActive(false);
 		messages.gameObject.SetActive(false);
-
 	}
 }
