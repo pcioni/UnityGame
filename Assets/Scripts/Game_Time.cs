@@ -39,7 +39,7 @@ public class Game_Time : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (day_time);
+		//Debug.Log (day_time);
 		if (day_time > 120f) {
 			day_time = 0f;
 			day += 1;
