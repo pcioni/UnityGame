@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Treee : MonoBehaviour {
-	GameObject tree;
+	//GameObject tree;
 	float time_passed;
 	float total_time;
 	public float x_scale;
@@ -11,9 +11,9 @@ public class Treee : MonoBehaviour {
 	public float z_scale;
 	float sink;
 	public float c;
-	bool clicked;
+	//bool clicked;
 
-	public Button start;
+	//public Button start;
 	//public float b;
 
 	void Start () {
@@ -21,11 +21,13 @@ public class Treee : MonoBehaviour {
 		time_passed = 0f;
 		sink = 0f;
 		total_time = 0f;
+		/*
 		start.onClick.AddListener (delegate () {
 			this.ButtonClicked ();
 		});
 
 		clicked = false;
+		*/
 	}
 	
 	// Update is called once per frame
@@ -37,7 +39,7 @@ public class Treee : MonoBehaviour {
 				time_passed = 0f;
 				
 				if (gameObject.transform.localScale.y < (x_scale * c +1f)){
-					sink = tree.gameObject.transform.localScale.y*3;
+					sink = gameObject.transform.localScale.y*3;
 				}else{
 					//sink = b;
 				}
@@ -52,7 +54,7 @@ public class Treee : MonoBehaviour {
 
 
 	}
-
+	/*
 	void ButtonClicked() {
 		if (!clicked) {
 			clicked = true;
@@ -63,6 +65,6 @@ public class Treee : MonoBehaviour {
 			Time.timeScale = 1.0f;
 		}
 	}
-
+*/
 
 }

@@ -47,7 +47,7 @@ public class cameraController : MonoBehaviour {
 			orbitTarget = selected;
 			orbitTarget.select();
 
-			Vector3 offset = -Camera.main.transform.forward * distanceFromZoomTarget + orbitTarget.offsetFromCenter;
+			Vector3 offset = ( -Camera.main.transform.forward * distanceFromZoomTarget + orbitTarget.offsetFromCenter ) * orbitTarget.offsetScaling;
 			TransitionStartPos = Camera.main.transform.position;
 			TransitionEndPos = orbitTarget.transform.position + offset;
 
@@ -87,7 +87,7 @@ public class cameraController : MonoBehaviour {
 		orbitTarget.deselect();
 		orbitTarget = originPlanet;
 
-		Vector3 offset = -Camera.main.transform.forward * distanceFromZoomTarget + orbitTarget.offsetFromCenter;
+		Vector3 offset = ( -Camera.main.transform.forward * distanceFromZoomTarget + orbitTarget.offsetFromCenter ) * orbitTarget.offsetScaling;
 		TransitionStartPos = Camera.main.transform.position;
 		TransitionEndPos = orbitTarget.transform.position + offset;
 

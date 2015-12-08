@@ -4,6 +4,8 @@ using System.Collections;
 public class objectHighlightOnMouseover : MonoBehaviour {
 
 	public Vector3 offsetFromCenter = new Vector3(0,0,0);
+	public float offsetScaling = 1f;
+
 	private Color startcolor;
 	private bool currentlySelected;
 	private cameraController ctrl;
@@ -16,9 +18,11 @@ public class objectHighlightOnMouseover : MonoBehaviour {
 		}
 	}
 	void OnMouseExit() {
-		GetComponent<Renderer>().material.color = startcolor;
-		if ( ctrl.selected == this )
-			ctrl.selected = null;
+		if ( Time.timeScale != 0.0 ) {
+			GetComponent<Renderer>().material.color = startcolor;
+			if ( ctrl.selected == this )
+				ctrl.selected = null;
+		}
 	}
 
 	public void select() {
