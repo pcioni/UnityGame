@@ -5,7 +5,6 @@ public class cameraController : MonoBehaviour {
 	
 	public float sensitivity  = 0.0f;
 	public float speed = 0.0f;
-	public float distanceFromZoomTarget = 0;  // how far from orbitTarget lerp stops
 	
 	private float minFov = 60.0f;
 	private float maxFov = 120.0f;
@@ -40,6 +39,28 @@ public class cameraController : MonoBehaviour {
 		fov = Mathf.Clamp(fov, minFov, maxFov);
 		Camera.main.fieldOfView = fov;
 	}
+
+	void LerpToTarget() {
+		Vector3 offset = orbitTarget.transform.position + orbitTarget.offsetFromCenter * orbitTarget.offsetScaling;
+		lookPos = offset - Camera.main.transform.position;
+		rotation = Quaternion.LookRotation(lookPos);
+		
+		//keeps track of our lerp distance
+		endMarker = orbitTarget.transform;
+		startMarker = transform;
+		startTime = Time.time;
+		journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
+		
+		//slerp smoothly
+		relativePos = orbitTarget.transform.position - transform.position;
+		lookAtAngle = Quaternion.LookRotation(relativePos);
+		
+		//Get a normalized vector projected towards orbitTarget
+		lerpVector = endMarker.position - startMarker.position;
+		lerpVector = lerpVector.normalized;
+		
+		StartCoroutine("smoothDampToPlanet");
+	}
 	
 	/*
 	 * Shoot a raycast from our camera to our mouse location. 
@@ -51,25 +72,7 @@ public class cameraController : MonoBehaviour {
 			orbitTarget = selected;
 			orbitTarget.select();
 
-			Vector3 offset = orbitTarget.transform.position + orbitTarget.offsetFromCenter * orbitTarget.offsetScaling;
-			lookPos = offset - Camera.main.transform.position;
-			rotation = Quaternion.LookRotation(lookPos);
-			
-			//keeps track of our lerp distance
-			endMarker = orbitTarget.transform;
-			startMarker = transform;
-			startTime = Time.time;
-			journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
-			
-			//slerp smoothly
-			relativePos = orbitTarget.transform.position - transform.position;
-			lookAtAngle = Quaternion.LookRotation(relativePos);
-			
-			//Get a normalized vector projected towards orbitTarget
-			lerpVector = endMarker.position - startMarker.position;
-			lerpVector = lerpVector.normalized;
-
-			StartCoroutine("smoothDampToPlanet");
+			LerpToTarget();
 		}
 	}    
 	
@@ -121,14 +124,11 @@ public class cameraController : MonoBehaviour {
 	IEnumerator smoothDampToPlanet() {
 		canRotateCamera = false;
 		for (float f = 0.0f; f <= 1f; f += .02f) {
-			float distCovered = (Time.time - startTime) * speed;
-			float fracJourney = distCovered / journeyLength;
-			float ScaledDist = distanceFromZoomTarget * orbitTarget.offsetScaling;
+			float distCovered = (Time.time - startTime) * f;
+			float ScaledDist = -orbitTarget.offsetScaling;
 			Vector3 lerpTo = (endMarker.position + (ScaledDist * lerpVector));
-			//Vector3 matchHeight = new Vector3(lerpTo.x, orbitTarget.transform.position.y, lerpTo.z);
-			//lerpTo = matchHeight;
 			
-			transform.position = Vector3.Lerp(startMarker.position, lerpTo, fracJourney);
+			transform.position = Vector3.Lerp(startMarker.position, lerpTo, f);
 			transform.rotation = Quaternion.Slerp(startMarker.rotation, lookAtAngle, Time.deltaTime * speed); // 2 = damping
 			yield return new WaitForEndOfFrame();
 		}
@@ -140,6 +140,7 @@ public class cameraController : MonoBehaviour {
 		orbitTarget = tmp;
 		originPlanet = tmp;
 		canRotateCamera = true;
+		LerpToTarget();
 	}
 	
 	void Update () {
@@ -147,7 +148,7 @@ public class cameraController : MonoBehaviour {
 		zoomInOut();
 		
 		if (Input.GetMouseButtonDown(0)) {
-			zoomInOnTarget ();
+			zoomInOnTarget();
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Escape)) {
