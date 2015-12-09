@@ -22,6 +22,7 @@ public class cameraController : MonoBehaviour {
 	private bool canRotateCamera;             // don't allow rotation during Lerp / Slerp.
 
 	private Vector3 camSmoothDampV;
+
 	/*
 	 * Lock the camera FOV to the scrollwheel. 
 	 * Change the FOV instead of distance to avoid clipping through objects.
