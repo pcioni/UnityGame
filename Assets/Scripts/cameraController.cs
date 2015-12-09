@@ -24,7 +24,7 @@ public class cameraController : MonoBehaviour {
 	private Transform endMarker;
 	private Vector3 lerpVector;               // point on a line to lerp to.
 	
-	private bool canRotateCamera; // don't allow rotation during Lerp / Slerp.
+	private bool canRotateCamera;             // don't allow rotation during Lerp / Slerp.
 	
 	private Vector3 camSmoothDampV;
 
