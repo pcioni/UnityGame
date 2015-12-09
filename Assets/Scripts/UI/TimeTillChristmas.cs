@@ -31,22 +31,18 @@ public class TimeTillChristmas : MonoBehaviour {
 	[TextArea(3,10)]
 	public string[][] TextPerDay = new string[][] {
 		new string[] {	"As the Sun rises over Christmas Town, a small population comes to life. The children of the village look outside - there's snow on the ground! It's Christmas Season!",
-						"In the center of Town, the villagers plant a small tree, and begin their yearly tradition. Each year, the villagers of Christmas Town decorate their tree with lights, ornaments, and other decorations.",
+						"In the center of Town, the villagers plant a small tree, and begin their yearly tradition. Each year, the villagers of Christmas Town decorate their tree with ornaments.",
 						"As more decorations go on the tree, the tree will grow, spreading Christmas cheer across the world!",
 						"This year, it's your turn to be in charge of the tree's growth. Christmas Town is depending on you, so spread Christmas cheer far and wide!" }, 
-		new string[] {	"One day has passed, and your tree is already showing signs of growth! Each day, you will receive a gift from those with Christmas Cheer!",
-						"Today, you received a bundle of Ornaments and a Stocking!" },
-		new string[] {	"As the villagers of Christmas Town wake up for another busy day, they are delighted to see that the tree is now taller than you! Up until now, you have only been able to decorate your tree with Ornaments, but you hear that the Light Factory is set to reopen tomorrow. Opening today's gift, you are delighted to see another bundle of Ornaments!" },
-		new string[] {	"You wake up to a surprise - the tree is now the size of the Town Square! As you begin preparations to continue to decorate the tree, one of the villagers comes running towards you. Bad news! The Light Factory is having problems! Go check it out! Inside your daily gift box, you find a Generator! You will be able to plug your Lights into the Generator to provide light to the tree!",
-						"The head of the Light Factory thanks you for your trouble, and presents you with a string of Lights! Starting tomorrow, the Factory will provide you with a daily supply of Lights to put on the tree!" },
-		new string[] { "GOODBYE" },
+		new string[] {	"One day has passed, and your tree is already showing signs of growth!" },
+		new string[] { },
+		new string[] { "As the villagers of Christmas Town wake up for another busy day, they are delighted to see that the tree is now taller than you!" },
+		new string[] { },
+		new string[] { },
+		new string[] { "One week has passed. The tree has grown so tall that we can make ornaments on the moon!" },
 		new string[] {},
 		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
+		new string[] { "Only two weeks until Christmas Eve! Everyone is jumping with joy (at the time off)! Ornaments are now being produced on Mars!" },
 		new string[] {},
 		new string[] {},
 		new string[] {},
@@ -58,6 +54,7 @@ public class TimeTillChristmas : MonoBehaviour {
 		new string[] {},
 		new string[] {}
 	};
+	public float[] RequiredSize = new float[30];
 	
 	public Text messages;
 	public Button accept;
@@ -75,15 +72,37 @@ public class TimeTillChristmas : MonoBehaviour {
 			this.ButtonClicked ();
 		});
 	}
+	private void TriggerEvent() {
+		print ( "Event Trigger " + DaysPassed.ToString() );
+		if ( DaysPassed == 7 ) {
+			print ( "Moon is now available" );
+			objectHighlightOnMouseover moon = GameObject.Find("Moon").GetComponent<objectHighlightOnMouseover>();
+			moon.SetToActive();
+		}
+		if ( DaysPassed == 10 ) {
+			print ( "Mars is now available" );
+			objectHighlightOnMouseover moon = GameObject.Find("Mars").GetComponent<objectHighlightOnMouseover>();
+			moon.SetToActive();
+		}
+		if ( DaysPassed == 18 ) {
+			print ( "Jupiter is now available" );
+			objectHighlightOnMouseover moon = GameObject.Find("Jupiter").GetComponent<objectHighlightOnMouseover>();
+			moon.SetToActive();
+		}
+		if ( DaysPassed == 24 ) {
+			print ( "Pluto is now available" );
+			objectHighlightOnMouseover moon = GameObject.Find("Pluto").GetComponent<objectHighlightOnMouseover>();
+			moon.SetToActive();
+		}
+	}
 	private void DayEvent(){
 		if ( TextPerDay.Length <= DaysPassed || TextPerDay[DaysPassed].Length <= DayIndex ) {
+			DaysPassed ++ ;
+			TriggerEvent();
 			return;
 		}
 
 		Time.timeScale = 0.0f;
-
-		print ( DaysPassed );
-		print ( DayIndex );
 		messages.text = TextPerDay[DaysPassed][DayIndex];
 
 		accept.gameObject.SetActive(true);
@@ -148,6 +167,7 @@ public class TimeTillChristmas : MonoBehaviour {
 			panel.SetActive(false);
 			DayIndex = 0;
 			DaysPassed ++ ;
+			TriggerEvent();
 		} else {
 			DayIndex ++ ;
 			DayEvent();

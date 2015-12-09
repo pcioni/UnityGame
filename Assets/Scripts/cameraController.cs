@@ -25,10 +25,6 @@ public class cameraController : MonoBehaviour {
 	
 	private bool canRotateCamera;             // don't allow rotation during Lerp / Slerp.
 	
-	private Vector3 camSmoothDampV;
-
-	private bool JustBegan = true;
-	
 	
 	/*
 	 * Lock the camera FOV to the scrollwheel. 
@@ -36,12 +32,19 @@ public class cameraController : MonoBehaviour {
 	 */
 	void zoomInOut() {
 		float dist = Vector3.Distance(transform.position, orbitTarget.transform.position);
-		if (dist > distToCollide && Input.GetAxis("Mouse ScrollWheel") > 0 ) {
-			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -dist / 10)); 
+		float i = Input.GetAxis("Mouse ScrollWheel");
+		if ( Input.GetKey(KeyCode.A) ) {
+			i = 0.01f;
+		} else if ( Input.GetKey(KeyCode.Q) ) {
+			i = -0.01f;
+		}
+
+		if ( Input.GetKey(KeyCode.A) || ( dist > distToCollide && i > 0 ) ) {
+			Vector3 moveDir = -(i * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -dist / 10)); 
 			transform.position += moveDir * Time.deltaTime; 
 		}
-		else {
-			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -dist / 10)); 
+		else if ( Input.GetKey(KeyCode.Q) || i < 0 ) {
+			Vector3 moveDir = -(i * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -dist / 10)); 
 			transform.position += moveDir * Time.deltaTime; 
 		}
 
@@ -75,7 +78,7 @@ public class cameraController : MonoBehaviour {
 	 *   If we hit an object, move our camera into it and offset it outside the object.
 	 */
 	void zoomInOnTarget() {
-		if ( selected != null && orbitTarget != selected) {
+		if ( selected != null && selected.IsActive && orbitTarget != selected) {
 			orbitTarget.deselect();
 			orbitTarget = selected;
 			orbitTarget.select();
@@ -91,7 +94,7 @@ public class cameraController : MonoBehaviour {
 			if (angle > 180) angle -= 360;  //   convert all angles to -180..+180
 			if (max > 180) max -= 360;
 			if (min > 180) min -= 360;
-		}    
+		}
 		angle = Mathf.Clamp(angle, min, max);
 		if (angle < 0) angle += 360;        // if angle negative, convert to 0..360
 		return angle;

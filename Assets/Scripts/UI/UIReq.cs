@@ -4,6 +4,7 @@ using System.Collections;
 public class UIReq : MonoBehaviour {
 
 	public InfoDisplay obj;
+	public bool IsActive = true;
 	
 	private double TimeSoFar = 0.0;
 	private double ScalingFactor = 1.0;
@@ -33,6 +34,9 @@ public class UIReq : MonoBehaviour {
 	}
 
 	void Update() {
+		if ( !IsActive || TimeUntilNext == 0.0 )
+			return;
+
 		if ( MiniGames.Length == 0 )
 			ScalingFactor = 1.0;
 		else {
@@ -45,16 +49,13 @@ public class UIReq : MonoBehaviour {
 			ScalingFactor = (double) total / (double) MiniGames.Length;
 		}
 		TimeSoFar += Time.deltaTime * ScalingFactor;
-		int k = 3;
-		while ( k > 0 && TimeSoFar >= TimeUntilNext ) {
-			print ( TimeSoFar );
+		while ( TimeSoFar >= TimeUntilNext ) {
 			TimeSoFar -= TimeUntilNext;
 			Spawn();
-			k -- ;
 		}
 	}
 	public double GetTimeToNext() {
-		if ( ScalingFactor == 0.0 )
+		if ( !IsActive || ScalingFactor == 0.0 )
 			return double.PositiveInfinity;
 		else
 			return ( TimeUntilNext - TimeSoFar ) / ScalingFactor;

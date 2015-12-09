@@ -22,7 +22,7 @@ public class YuleLog : MonoBehaviour {
 		if ( mask == null )
 			Debug.Log( "Yule Log is not parented to an object that has objectHighlightOnMouseover" );
 		if ( display == null ) {
-			display = (Renderer) GetComponent<MeshRenderer> ();
+			display = (Renderer) GetComponentInChildren<ParticleSystemRenderer> ();
 		}
 		SetObjectLit();
 	}
