@@ -12,7 +12,7 @@ public class CreateDraggable : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		if ( self.count != 0 ) {
+		if ( Time.timeScale != 0.0 && self.count != 0 ) {
 			self.Decrement();
 			GameObject obj = Instantiate( tocreate );
 			obj.transform.position = transform.position;

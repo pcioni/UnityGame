@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Draggable : MonoBehaviour {
@@ -26,7 +26,10 @@ public class Draggable : MonoBehaviour {
                 GameObject nobj = (GameObject) Instantiate(ornament);
                 nobj.transform.position = transform.position;
                 nobj.transform.localScale = new Vector3(10,10,10);
-                nobj.transform.parent = GameObject.Find("tree").transform;
+				GameObject g = GameObject.Find("tree");
+                nobj.transform.parent = g.transform;
+				g.GetComponent<Treee>().Ornaments ++ ;
+				print ( g.GetComponent<Treee>().Ornaments );
             }
             Destroy(gameObject);
             return;
