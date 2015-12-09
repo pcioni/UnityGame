@@ -72,6 +72,8 @@ public class TimeTillChristmas : MonoBehaviour {
 	public Image win;
 	public Image fail;
 
+	public float limit;
+
 	// Use this for initialization
 	void Start () {
 		timer = GetComponent<Text>();
@@ -152,7 +154,7 @@ public class TimeTillChristmas : MonoBehaviour {
 				} else {
 					print ( "WORKING" );
 					Time.timeScale = 0.0f;
-					if ( tree.gameObject.transform.localScale.y >= 60 ){
+					if ( tree.gameObject.transform.localScale.y >= limit ){
 						print ( "WIN" );
 						win.gameObject.SetActive(true);
 					} else {
