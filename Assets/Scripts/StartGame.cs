@@ -17,11 +17,6 @@ public class StartGame : MonoBehaviour {
 	}
 	
 
-
-	void Update () {
-	
-	}
-
 	public void ButtonClicked(){
 		Time.timeScale = 1.0f;
 		init_screen.gameObject.SetActive (false);

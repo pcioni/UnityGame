@@ -68,6 +68,10 @@ public class TimeTillChristmas : MonoBehaviour {
 	
 	private Text timer;
 
+	public GameObject tree;
+	public Image win;
+	public Image fail;
+
 	// Use this for initialization
 	void Start () {
 		timer = GetComponent<Text>();
@@ -141,9 +145,18 @@ public class TimeTillChristmas : MonoBehaviour {
 			if ( StartHour == 24 ) {
 				StartHour = 0;
 				StartDay ++ ;
+				if (StartDay<25){
+					DayEvent();
+				}else{
+					Time.timeScale = 0.0f;
+					if (tree.gameObject.transform.localScale.y >= 60){
+						win.gameObject.SetActive(true);
+					}
+					else{
+						fail.gameObject.SetActive(false);
+					}
 
-				DayEvent();
-
+				}
 				if ( StartDay == monthLen[StartMonth] ) {
 					StartDay = 0;
 					StartMonth ++ ;
