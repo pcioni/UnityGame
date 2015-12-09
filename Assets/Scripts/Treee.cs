@@ -35,7 +35,7 @@ public class Treee : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (total_time < 20) {
-			float rate = Mathf.Max( 1f, Mathf.Log( (float)(Ornaments*Ornaments) ) );
+			float rate = Mathf.Max( 1f, Mathf.Log( 5f * (float)(Ornaments*Ornaments) ) );
 			if (time_passed > TimeToGrow / rate ) {
 
 				gameObject.transform.localScale += new Vector3 (x_scale * rate, y_scale * rate, z_scale * rate);
