@@ -38,7 +38,7 @@ public class whipSmack : MonoBehaviour {
 	void Update () {
 		getMouseVelocity();
 		Vector3 distFromCamera = Input.mousePosition;
-		distFromCamera.z = 2f; 						  //  draw the object this far from the camera
+		distFromCamera.z = 1f; 						  //  draw the object this far from the camera
 		if (Input.GetKeyDown(KeyCode.E)) {
 			tracking = !tracking;
 		}
