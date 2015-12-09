@@ -26,6 +26,7 @@ public class workerController : MonoBehaviour {
 	}
 
     void returnToNeutral() {
+        gameObject.GetComponent<MiniGameActive>().IsActive = true;
         isSmacked = false;
         GetComponent<Renderer>().material.color = startColor;
     }
@@ -39,7 +40,8 @@ public class workerController : MonoBehaviour {
 	void Update () {
 		int rand = Random.Range(0, chanceOfSpawning);
 		if (rand == 1) {
-			isSmacked = true;
+            isSmacked = true;
+            gameObject.GetComponent<MiniGameActive>().IsActive = false;
             health = 5;
 			GetComponent<Renderer>().material.color = Color.red;
 		}
