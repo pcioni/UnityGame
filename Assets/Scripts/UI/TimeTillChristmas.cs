@@ -78,6 +78,8 @@ public class TimeTillChristmas : MonoBehaviour {
 		accept.gameObject.SetActive (false);
 		messages.gameObject.SetActive (false);
 		panel.SetActive(false);
+		win.gameObject.SetActive( false );
+		fail.gameObject.SetActive( false );
 		accept.onClick.AddListener (delegate () {
 			this.ButtonClicked ();
 		});
@@ -124,10 +126,8 @@ public class TimeTillChristmas : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKeyDown (KeyCode.J)) {
-			DaysPassed +=1;
-			StartHour = 8;
-			StartMinute = 0;
-			DayEvent ();
+			StartHour = 23;
+			StartMinute = 59.9;
 		}
 
 		if ( Time.timeScale == 0.0 )
@@ -145,24 +145,21 @@ public class TimeTillChristmas : MonoBehaviour {
 			if ( StartHour == 24 ) {
 				StartHour = 0;
 				StartDay ++ ;
-				if (StartDay<25){
+				if (StartDay < 24){
+
 					DayEvent();
-				}else{
+
+				} else {
+					print ( "WORKING" );
 					Time.timeScale = 0.0f;
-					if (tree.gameObject.transform.localScale.y >= 60){
+					if ( tree.gameObject.transform.localScale.y >= 60 ){
+						print ( "WIN" );
 						win.gameObject.SetActive(true);
-					}
-					else{
-						fail.gameObject.SetActive(false);
+					} else {
+						print ( "FAIL" );
+						fail.gameObject.SetActive(true);
 					}
 
-				}
-				if ( StartDay == monthLen[StartMonth] ) {
-					StartDay = 0;
-					StartMonth ++ ;
-					if ( StartMonth == 12 ) {
-						StartMonth = 0;
-					}
 				}
 			}
 		}
