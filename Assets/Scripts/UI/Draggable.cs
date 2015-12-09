@@ -15,7 +15,6 @@ public class Draggable : MonoBehaviour {
 				GameObject g = GameObject.Find("tree");
                 nobj.transform.parent = g.transform;
 				g.GetComponent<Treee>().Ornaments ++ ;
-				print ( g.GetComponent<Treee>().Ornaments );
             }
             Destroy(gameObject);
             return;

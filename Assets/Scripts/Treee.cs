@@ -22,9 +22,7 @@ public class Treee : MonoBehaviour {
 		//tree = GameObject.Find ("tree");
 		time_passed = 0f;
 		total_time = 0f;
-
-		child = GetComponentInChildren<objectHighlightOnMouseover>();
-
+	
 		/*
 		start.onClick.AddListener (delegate () {
 			this.ButtonClicked ();
@@ -37,12 +35,9 @@ public class Treee : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (total_time < 20) {
-			float rate = Mathf.Max( 1f, Mathf.Log( (float)Ornaments ) );
+			float rate = Mathf.Max( 1f, Mathf.Log( (float)(Ornaments*Ornaments) ) );
 			if (time_passed > TimeToGrow / rate ) {
 
-				child.transform.position = new Vector3(child.transform.position.x,
-				                                       child.transform.position.y + 0.1f,
-				                                       child.transform.position.z );
 				gameObject.transform.localScale += new Vector3 (x_scale * rate, y_scale * rate, z_scale * rate);
 				time_passed = 0f;
 				
