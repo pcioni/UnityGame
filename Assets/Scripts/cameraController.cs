@@ -5,9 +5,6 @@ public class cameraController : MonoBehaviour {
 	
 	public float sensitivity  = 0.0f;
 	public float speed = 0.0f;
-	
-	private float minFov = 60.0f;
-	private float maxFov = 120.0f;
 
 	public objectHighlightOnMouseover selected = null;
 	private objectHighlightOnMouseover orbitTarget = null;
@@ -17,6 +14,7 @@ public class cameraController : MonoBehaviour {
 	private Quaternion rotation;
 	private Quaternion lookAtAngle;           // target slerp angle
 	private Vector3 relativePos;              // relative camera position from OrbitTarget
+    private float distanceScale = 1f;
 	
 	private float startTime;                  // time our lerp begins
 	private float journeyLength;			  // distance between both lerp objects
@@ -37,8 +35,7 @@ public class cameraController : MonoBehaviour {
 	 */
 	void zoomInOut() {
 		float fov = Camera.main.fieldOfView;
-		fov += Input.GetAxis("Mouse ScrollWheel") * -sensitivity;
-		fov = Mathf.Clamp(fov, minFov, maxFov);
+        distanceScale = Mathf.Min( 0.1f, Input.GetAxis("Mouse ScrollWheel") * -sensitivity );
 		Camera.main.fieldOfView = fov;
 	}
 
@@ -157,10 +154,8 @@ public class cameraController : MonoBehaviour {
 			resetCameraToOrigin();
 		}
 		
-		
 		orbitCamera ();
-		
-		
+
 	}
 	
 	
