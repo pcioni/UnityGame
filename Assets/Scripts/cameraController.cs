@@ -5,6 +5,7 @@ public class cameraController : MonoBehaviour {
 	
 	public float sensitivity  = 0.0f;
 	public float speed = 0.0f;
+	public float distToCollide = 0.0f;
 
 	public objectHighlightOnMouseover selected = null;
 	private objectHighlightOnMouseover orbitTarget = null;
@@ -34,9 +35,17 @@ public class cameraController : MonoBehaviour {
 	 * Change the FOV instead of distance to avoid clipping through objects.
 	 */
 	void zoomInOut() {
-		float fov = Camera.main.fieldOfView;
-        distanceScale = Mathf.Min( 0.1f, Input.GetAxis("Mouse ScrollWheel") * -sensitivity );
-		Camera.main.fieldOfView = fov;
+		float dist = Vector3.Distance(transform.position, orbitTarget.transform.position);
+		print (Input.GetAxis("Mouse ScrollWheel"));
+		if (dist > distToCollide && Input.GetAxis("Mouse ScrollWheel") > 0 ) {
+			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -1)); 
+			transform.position += moveDir * Time.deltaTime; 
+		}
+		else {
+			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -1)); 
+			transform.position += moveDir * Time.deltaTime; 
+		}
+
 	}
 
 
