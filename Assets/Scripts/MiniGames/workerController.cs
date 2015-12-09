@@ -3,7 +3,7 @@ using System.Collections;
 
 public class workerController : MonoBehaviour {
 
-	private bool isSmacked = false;
+	private bool isSmacked = false;                 //use this to hook into the resource generation
 	private Color startColor;
 	public int chanceOfSpawning = 0;
 

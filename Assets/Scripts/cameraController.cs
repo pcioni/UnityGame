@@ -11,14 +11,9 @@ public class cameraController : MonoBehaviour {
 	private objectHighlightOnMouseover orbitTarget = null;
 	private objectHighlightOnMouseover originPlanet = null;
 	
-	private Vector3 lookPos;
-	private Quaternion rotation;
 	private Quaternion lookAtAngle;           // target slerp angle
 	private Vector3 relativePos;              // relative camera position from OrbitTarget
-    private float distanceScale = 1f;
 	
-	private float startTime;                  // time our lerp begins
-	private float journeyLength;			  // distance between both lerp objects
 	private Transform startMarker;            
 	private Transform endMarker;
 	private Vector3 lerpVector;               // point on a line to lerp to.
@@ -27,9 +22,6 @@ public class cameraController : MonoBehaviour {
 	
 	private Vector3 camSmoothDampV;
 
-	private bool JustBegan = true;
-	
-	
 	/*
 	 * Lock the camera FOV to the scrollwheel. 
 	 * Change the FOV instead of distance to avoid clipping through objects.
@@ -49,15 +41,9 @@ public class cameraController : MonoBehaviour {
 
 
 	void LerpToTarget() {
-		Vector3 offset = orbitTarget.transform.position + orbitTarget.offsetFromCenter * orbitTarget.offsetScaling;
-		lookPos = offset - Camera.main.transform.position;
-		rotation = Quaternion.LookRotation(lookPos);
-		
 		//keeps track of our lerp distance
 		endMarker = orbitTarget.transform;
 		startMarker = transform;
-		startTime = Time.time;
-		journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
 		
 		//slerp smoothly
 		relativePos = orbitTarget.transform.position - transform.position;
@@ -84,7 +70,7 @@ public class cameraController : MonoBehaviour {
 		}
 	}    
 	
-	// H-A-T-E, this is what stress does to me!
+	// Clamp our angles because apparently Unity doesn't know how.
 	float clampAngle(float angle, float min, float max) {
 		
 		if (angle < 90 || angle > 270){     // if angle in the critical region
@@ -114,8 +100,6 @@ public class cameraController : MonoBehaviour {
 
 		endMarker = orbitTarget.transform;
 		startMarker = transform;
-		startTime = Time.time;
-		journeyLength = Vector3.Distance(startMarker.position, endMarker.position);
 
 		StartCoroutine("smoothDampToPlanet");
 	}
@@ -132,7 +116,6 @@ public class cameraController : MonoBehaviour {
 	IEnumerator smoothDampToPlanet() {
 		canRotateCamera = false;
 		for (float f = 0.0f; f <= 1f; f += .02f * Time.timeScale) {
-			float distCovered = (Time.time - startTime) * f;
 			float ScaledDist = -orbitTarget.offsetScaling;
 			Vector3 lerpTo = (endMarker.position + (ScaledDist * lerpVector));
 			
