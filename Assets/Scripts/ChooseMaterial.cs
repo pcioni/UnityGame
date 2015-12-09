@@ -12,7 +12,6 @@ public class ChooseMaterial : MonoBehaviour {
 	void Start () {
         MeshRenderer tmp = GetComponent<MeshRenderer>();
         float k = Random.value * 4.99f;
-        print((int)k);
         tmp.material = matList[(int) k];
         parentTransform = transform.parent.transform;
         baseScale = parentTransform.localScale;

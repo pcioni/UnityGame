@@ -5,6 +5,7 @@ public class whipSmack : MonoBehaviour {
 
 	private Vector3 delta = Vector3.zero;
 	private Vector3 lastPos = Vector3.zero;
+
 	private bool tracking = false;
 
 	void getMouseVelocity() {
@@ -16,10 +17,10 @@ public class whipSmack : MonoBehaviour {
 			
 			// Do Stuff here
 			
-			Debug.Log( "delta X : " + delta.x );
-			Debug.Log( "delta Y : " + delta.y );
+			//Debug.Log( "delta X : " + delta.x );
+			//Debug.Log( "delta Y : " + delta.y );
 			
-			Debug.Log( "delta distance : " + delta.magnitude );
+			//Debug.Log( "delta distance : " + delta.magnitude );
 			
 			// End do stuff
 			
@@ -31,7 +32,7 @@ public class whipSmack : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		// check if delta distance is high enough,
 		// or some other form of speed checking
-		other.GetComponent<workerController>().getWhipped();
+		//other.GetComponent<workerController>().getWhipped();
 		print ("whip collision");
 	}
 
@@ -39,13 +40,20 @@ public class whipSmack : MonoBehaviour {
 		getMouseVelocity();
 		Vector3 distFromCamera = Input.mousePosition;
 		distFromCamera.z = .5f; 						  //  draw the object this far from the camera
-		if (Input.GetKeyDown(KeyCode.E)) {
-			tracking = !tracking;
-		}
 		if (tracking) {								  //  follow the mouse
 			this.transform.rotation = Camera.main.transform.rotation;
 			this.transform.position = Camera.main.ScreenToWorldPoint(distFromCamera);
 		}
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit)) {
+                if (hit.transform.name == "worker") {
+                    hit.transform.gameObject.GetComponent<workerController>().getWhipped();
+                    print("whipped");
+                }
+            }
+        }
 
 	}
 }
