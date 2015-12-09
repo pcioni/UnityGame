@@ -13,9 +13,11 @@ public class YuleLog : MonoBehaviour {
 	private bool lit = true;
 	private float heat = 0.0f;
 	private Vector3 lastPos = new Vector3();
+	private MiniGameActive comp;
 
 	// Use this for initialization
 	void Start () {
+		comp = GetComponent<MiniGameActive>();
 		mask = GetComponentInParent<objectHighlightOnMouseover>();
 		if ( mask == null )
 			Debug.Log( "Yule Log is not parented to an object that has objectHighlightOnMouseover" );
@@ -26,10 +28,12 @@ public class YuleLog : MonoBehaviour {
 	}
 
 	public void SetObjectLit() {
+		comp.IsActive = true;
 		display.enabled = true;
 		StartCoroutine( CheckDeactivate() );
 	}
 	public void SetObjectUnlit() {
+		comp.IsActive = false;
 		heat = 0f;
 		display.enabled = false;
 	}

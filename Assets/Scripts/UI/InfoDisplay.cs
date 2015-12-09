@@ -50,7 +50,12 @@ public class InfoDisplay : MonoBehaviour {
 		if ( target == null )
 			return;
 
-		TimeToNext.text = "Time Until Next: " + target.TimeUntilNext.ToString();
+		double tt = target.GetTimeToNext();
+		if ( double.IsInfinity( tt ) ) {
+			TimeToNext.text = "Time Until Next: Never";
+		} else {
+			TimeToNext.text = "Time Until Next: " + tt.ToString();
+		}
 
 		if ( target.FactoryName != Name.text )
 			Name.text = target.FactoryName;

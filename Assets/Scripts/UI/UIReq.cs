@@ -4,9 +4,9 @@ using System.Collections;
 public class UIReq : MonoBehaviour {
 
 	public InfoDisplay obj;
-
-	public double SpawnRate = 10.0;
-
+	
+	private double TimeSoFar = 0.0;
+	private double ScalingFactor = 1.0;
 	public double TimeUntilNext = 0.0;
 	public string FactoryName = "New Factory";
 	[TextArea(3,10)]
@@ -14,7 +14,8 @@ public class UIReq : MonoBehaviour {
 	[TextArea(3,10)]
 	public string FlavorText = "Talk about yourself SOME MORE!";
 	
-	CountDisplay SpawnObject = null;
+	private CountDisplay SpawnObject = null;
+	private Component[] MiniGames;
 
 	public void Spawn() {
 		if ( SpawnObject != null )
@@ -26,15 +27,37 @@ public class UIReq : MonoBehaviour {
 	void Start() {
 		if ( obj == null )
 			obj = GameObject.Find( "UIDisplay" ).GetComponent<InfoDisplay>();
-		TimeUntilNext = SpawnRate;
 		SpawnObject = GetComponentInChildren<CountDisplay>();
+		MiniGames = GetComponentsInChildren<MiniGameActive>();
+		TimeSoFar = 0.0;
 	}
+
 	void Update() {
-		TimeUntilNext -= Time.deltaTime;
-		if ( TimeUntilNext <= 0.0 ) {
-			TimeUntilNext += SpawnRate;
-			Spawn();
+		if ( MiniGames.Length == 0 )
+			ScalingFactor = 1.0;
+		else {
+			int total = 0;
+			foreach (MiniGameActive mini in MiniGames) {
+				if ( mini.IsActive ) {
+					total ++ ;
+				}
+			}
+			ScalingFactor = (double) total / (double) MiniGames.Length;
 		}
+		TimeSoFar += Time.deltaTime * ScalingFactor;
+		int k = 3;
+		while ( k > 0 && TimeSoFar >= TimeUntilNext ) {
+			print ( TimeSoFar );
+			TimeSoFar -= TimeUntilNext;
+			Spawn();
+			k -- ;
+		}
+	}
+	public double GetTimeToNext() {
+		if ( ScalingFactor == 0.0 )
+			return double.PositiveInfinity;
+		else
+			return ( TimeUntilNext - TimeSoFar ) / ScalingFactor;
 	}
 
 	void OnMouseEnter() {

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class cameraController : MonoBehaviour {
@@ -36,13 +36,12 @@ public class cameraController : MonoBehaviour {
 	 */
 	void zoomInOut() {
 		float dist = Vector3.Distance(transform.position, orbitTarget.transform.position);
-		print (Input.GetAxis("Mouse ScrollWheel"));
 		if (dist > distToCollide && Input.GetAxis("Mouse ScrollWheel") > 0 ) {
-			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -1)); 
+			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -dist / 10)); 
 			transform.position += moveDir * Time.deltaTime; 
 		}
 		else {
-			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -1)); 
+			Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -dist / 10)); 
 			transform.position += moveDir * Time.deltaTime; 
 		}
 
