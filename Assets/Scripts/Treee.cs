@@ -13,6 +13,7 @@ public class Treee : MonoBehaviour {
 	public objectHighlightOnMouseover child;
 	public float TimeToGrow = 2f;
 	public int Ornaments = 0;
+
 	//bool clicked;
 
 	//public Button start;
@@ -22,6 +23,7 @@ public class Treee : MonoBehaviour {
 		//tree = GameObject.Find ("tree");
 		time_passed = 0f;
 		total_time = 0f;
+		child = GetComponentInChildren<objectHighlightOnMouseover>();
 	
 		/*
 		start.onClick.AddListener (delegate () {
@@ -40,7 +42,7 @@ public class Treee : MonoBehaviour {
 
 				gameObject.transform.localScale += new Vector3 (x_scale * rate, y_scale * rate, z_scale * rate);
 				time_passed = 0f;
-				
+				child.offsetScaling = gameObject.transform.localScale.x;
 				
 			} else {
 				time_passed += Time.deltaTime;
