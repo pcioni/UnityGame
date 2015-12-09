@@ -26,7 +26,9 @@ public class cameraController : MonoBehaviour {
 	
 	private bool canRotateCamera; // don't allow rotation during Lerp / Slerp.
 	
-	private Vector3 camSmoothDampV; 
+	private Vector3 camSmoothDampV;
+
+	private bool JustBegan = true;
 	
 	
 	/*
@@ -123,7 +125,7 @@ public class cameraController : MonoBehaviour {
 	 */ 
 	IEnumerator smoothDampToPlanet() {
 		canRotateCamera = false;
-		for (float f = 0.0f; f <= 1f; f += .02f) {
+		for (float f = 0.0f; f <= 1f; f += .02f * Time.timeScale) {
 			float distCovered = (Time.time - startTime) * f;
 			float ScaledDist = -orbitTarget.offsetScaling;
 			Vector3 lerpTo = (endMarker.position + (ScaledDist * lerpVector));
@@ -144,7 +146,7 @@ public class cameraController : MonoBehaviour {
 	}
 	
 	void Update () {
-		
+
 		zoomInOut();
 		
 		if (Input.GetMouseButtonDown(0)) {
