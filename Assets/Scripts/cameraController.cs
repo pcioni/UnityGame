@@ -5,9 +5,6 @@ public class cameraController : MonoBehaviour {
 	
 	public float sensitivity  = 0.0f;
 	public float speed = 0.0f;
-	
-	private float minFov = 60.0f;
-	private float maxFov = 120.0f;
 
 	public objectHighlightOnMouseover selected = null;
 	private objectHighlightOnMouseover orbitTarget = null;
@@ -17,6 +14,7 @@ public class cameraController : MonoBehaviour {
 	private Quaternion rotation;
 	private Quaternion lookAtAngle;           // target slerp angle
 	private Vector3 relativePos;              // relative camera position from OrbitTarget
+    private float distanceScale = 1f;
 	
 	private float startTime;                  // time our lerp begins
 	private float journeyLength;			  // distance between both lerp objects
@@ -26,7 +24,9 @@ public class cameraController : MonoBehaviour {
 	
 	private bool canRotateCamera;             // don't allow rotation during Lerp / Slerp.
 	
-	private Vector3 camSmoothDampV; 
+	private Vector3 camSmoothDampV;
+
+	private bool JustBegan = true;
 	
 	
 	/*
@@ -34,8 +34,14 @@ public class cameraController : MonoBehaviour {
 	 * Change the FOV instead of distance to avoid clipping through objects.
 	 */
 	void zoomInOut() {
+<<<<<<< HEAD
 		Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -1)); 
 		transform.position += moveDir * Time.deltaTime; 
+=======
+		float fov = Camera.main.fieldOfView;
+        distanceScale = Mathf.Min( 0.1f, Input.GetAxis("Mouse ScrollWheel") * -sensitivity );
+		Camera.main.fieldOfView = fov;
+>>>>>>> a3a60ca79128154214fffc812ceb2e263fba94f4
 	}
 
 
@@ -122,7 +128,7 @@ public class cameraController : MonoBehaviour {
 	 */ 
 	IEnumerator smoothDampToPlanet() {
 		canRotateCamera = false;
-		for (float f = 0.0f; f <= 1f; f += .02f) {
+		for (float f = 0.0f; f <= 1f; f += .02f * Time.timeScale) {
 			float distCovered = (Time.time - startTime) * f;
 			float ScaledDist = -orbitTarget.offsetScaling;
 			Vector3 lerpTo = (endMarker.position + (ScaledDist * lerpVector));
@@ -143,7 +149,7 @@ public class cameraController : MonoBehaviour {
 	}
 	
 	void Update () {
-		
+
 		zoomInOut();
 		
 		if (Input.GetMouseButtonDown(0)) {
@@ -154,10 +160,8 @@ public class cameraController : MonoBehaviour {
 			resetCameraToOrigin();
 		}
 		
-		
 		orbitCamera ();
-		
-		
+
 	}
 	
 	
