@@ -43,7 +43,6 @@ public class YuleLog : MonoBehaviour {
 	}
 	void Update () {
 		if ( !lit ) {
-			print ( heat );
 			if ( heat >= 1f ) {
 				lit = true;
 				SetObjectLit();
