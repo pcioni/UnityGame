@@ -30,29 +30,35 @@ public class TimeTillChristmas : MonoBehaviour {
 
 	[TextArea(3,10)]
 	public string[][] TextPerDay = new string[][] {
-		new string[] {	"As the Sun rises over Christmas Town, a small population comes to life. The children of the village look outside - there's snow on the ground! It's Christmas Season!",
-						"In the center of Town, the villagers plant a small tree, and begin their yearly tradition. Each year, the villagers of Christmas Town decorate their tree with ornaments.",
-						"As more decorations go on the tree, the tree will grow, spreading Christmas cheer across the world!",
-						"This year, it's your turn to be in charge of the tree's growth. Christmas Town is depending on you, so spread Christmas cheer far and wide!" }, 
-		new string[] {	"One day has passed, and your tree is already showing signs of growth!" },
-		new string[] { },
-		new string[] { "As the villagers of Christmas Town wake up for another busy day, they are delighted to see that the tree is now taller than you!" },
-		new string[] { },
-		new string[] { },
-		new string[] { "One week has passed. The tree has grown so tall that we can make ornaments on the moon!" },
-		new string[] {},
-		new string[] {},
-		new string[] { "Only two weeks until Christmas Eve! Everyone is jumping with joy (at the time off)! Ornaments are now being produced on Mars!" },
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {},
-		new string[] {}
+		/* 01 */ new string[] {	"As the Sun rises over Christmas Town, a small population comes to life. The children of the village look outside - there's snow on the ground! It's Christmas Season!",
+								"In the center of Town, the villagers plant a small tree, and begin their yearly tradition. Each year, the villagers of Christmas Town decorate their tree with ornaments.",
+								"As more decorations go on the tree, the tree will grow, spreading Christmas cheer across the world!",
+								"This year, it's your turn to be in charge of the tree's growth. Christmas Town is depending on you, so spread Christmas cheer far and wide!" }, 
+		/* 02 */ new string[] {	"One day has passed, and your tree is already showing signs of growth!" },
+		/* 03 */ new string[] { },
+		/* 04 */ new string[] { "As the villagers of Christmas Town wake up for another busy day, they are delighted to see that the tree is now taller than you!" },
+		/* 05 */ new string[] { },
+		/* 06 */ new string[] { },
+		/* 07 */ new string[] { "One week has passed. The tree has grown so tall that we can make ornaments on the moon!" },
+		/* 08 */ new string[] {},
+		/* 09 */ new string[] {},
+		/* 10 */ new string[] { "Only two weeks until Christmas Eve! Everyone is jumping with joy (at the time off)! Ornaments are now being produced on Mars!" },
+		/* 11 */ new string[] {},
+		/* 12 */ new string[] {},
+		/* 13 */ new string[] {},
+		/* 14 */ new string[] {},
+		/* 15 */ new string[] {},
+		/* 16 */ new string[] {},
+		/* 17 */ new string[] {},
+		/* 18 */ new string[] { "Our tree is the size of Jupiter! We can also produce ornaments on Jupiter!" },
+		/* 19 */ new string[] {},
+		/* 20 */ new string[] {},
+		/* 21 */ new string[] {},
+		/* 22 */ new string[] {},
+		/* 23 */ new string[] {},
+		/* 24 */ new string[] { "Only one more day to go. Our tree has grown to be the size of the solar system, reaching all the way out to tiny Pluto!" },
+		/* 25 */ new string[] { "Merry Christmas everyone! We all worked so hard to make this years Christmas tree better than ever before. Let us all take a moment to appreciate this wonderful holiday...",
+								"Now back to work everyone. We have to get ready for next year." }
 	};
 	public float[] RequiredSize = new float[30];
 	
@@ -68,14 +74,12 @@ public class TimeTillChristmas : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-		win.gameObject.SetActive (false);
-		fail.gameObject.SetActive (false);
-
 		timer = GetComponent<Text>();
 		accept.gameObject.SetActive (false);
 		messages.gameObject.SetActive (false);
 		panel.SetActive(false);
+		win.gameObject.SetActive( false );
+		fail.gameObject.SetActive( false );
 		accept.onClick.AddListener (delegate () {
 			this.ButtonClicked ();
 		});
@@ -122,63 +126,43 @@ public class TimeTillChristmas : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKeyDown (KeyCode.J)) {
-			DaysPassed += 1;
-			StartDay += 1;
-			StartHour = 8;
-			StartMinute = 0;
-	
-			if (StartDay < 24) {
-				DayEvent ();
-			} else {
-				if (tree.gameObject.transform.localScale.y >= 600) {
-					win.gameObject.SetActive (true);
-				} else {
-					fail.gameObject.SetActive (false);
-				}
-				Time.timeScale = 0.0f;
-			}
+			StartHour = 23;
+			StartMinute = 59.9;
 		}
 
-		if (Time.timeScale == 0.0)
+		if ( Time.timeScale == 0.0 )
 			return;
 
-		if (DaysPassed == 0) {
-			DayEvent ();
+		if ( DaysPassed == 0 ) {
+			DayEvent();
 			return;
 		}
-
-
 
 		StartMinute += Time.deltaTime * GameMinutesPerWorldSeconds;
-		while (StartMinute >= 60.0) {
-			StartHour ++;
+		while ( StartMinute >= 60.0 ) {
+			StartHour ++ ;
 			StartMinute -= 60.0;
-			if (StartHour == 24) {
+			if ( StartHour == 24 ) {
 				StartHour = 0;
-				StartDay ++;
-				if (StartDay < 25) {
-					DayEvent ();
+				StartDay ++ ;
+				if (StartDay < 24){
+
+					DayEvent();
+
 				} else {
-
-					if (tree.gameObject.transform.localScale.y >= 600) {
-						win.gameObject.SetActive (true);
-					} else {
-						fail.gameObject.SetActive (false);
-					}
+					print ( "WORKING" );
 					Time.timeScale = 0.0f;
-				}
+					if ( tree.gameObject.transform.localScale.y >= 60 ){
+						print ( "WIN" );
+						win.gameObject.SetActive(true);
+					} else {
+						print ( "FAIL" );
+						fail.gameObject.SetActive(true);
+					}
 
-			}
-			if (StartDay == monthLen [StartMonth]) {
-				StartDay = 0;
-				StartMonth ++;
-				if (StartMonth == 12) {
-					StartMonth = 0;
 				}
 			}
 		}
-	
-		
 		int hrs = ( StartHour + 11 ) % 12 + 1;
 		int min = (int) StartMinute;
 		string working;

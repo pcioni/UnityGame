@@ -30,11 +30,14 @@ public class workerController : MonoBehaviour {
     void returnToNeutral() {
         gameObject.GetComponent<MiniGameActive>().IsActive = true;
         isSmacked = false;
-        GetComponent<Renderer>().material.color = startColor;
+        GetComponent<Renderer>().material.color = Color.grey;
+        gameObject.GetComponent<ParticleSystem>().Play();
+
     }
 
 	void Start () {
 		startColor = GetComponent<Renderer>().material.color;
+        GetComponent<Renderer>().material.color = Color.grey;
 	}
 	
 	void Update () {
