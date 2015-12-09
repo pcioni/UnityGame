@@ -30,8 +30,10 @@ public class TimeTillChristmas : MonoBehaviour {
 
 	[TextArea(3,10)]
 	public string[][] TextPerDay = new string[][] {
-		new string[] {"Hello"}, 
-		new string[] {"World"}
+		new string[] {"Hello", "Butts", "Banana"}, 
+		new string[] {"World"},
+		new string[] {"Cheesecake"},
+		new string[] {"Egg Nog"}
 	};
 	
 	public Text messages;
@@ -53,6 +55,8 @@ public class TimeTillChristmas : MonoBehaviour {
 	private void DayEvent(){
 		Time.timeScale = 0.0f;
 
+		print ( DaysPassed );
+		print ( DayIndex );
 		messages.text = TextPerDay[DaysPassed][DayIndex];
 
 		accept.gameObject.SetActive(true);
@@ -62,11 +66,17 @@ public class TimeTillChristmas : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if ( Time.timeScale == 0.0 )
+			return;
+
 		if ( DaysPassed == 0 ) {
+			print ( "DAYS PASSED" );
 			DayEvent();
-			DaysPassed ++ ;
 			return;
 		}
+
+		print ( "UPDATE" );
+
 		StartMinute += Time.deltaTime * GameMinutesPerWorldSeconds;
 		while ( StartMinute >= 60.0 ) {
 			StartHour ++ ;
@@ -76,8 +86,6 @@ public class TimeTillChristmas : MonoBehaviour {
 				StartDay ++ ;
 
 				DayEvent();
-
-				DaysPassed ++ ;
 
 				if ( StartDay == monthLen[StartMonth] ) {
 					StartDay = 0;
@@ -106,6 +114,8 @@ public class TimeTillChristmas : MonoBehaviour {
 			accept.gameObject.SetActive(false);
 			messages.gameObject.SetActive(false);
 			panel.SetActive(false);
+			DayIndex = 0;
+			DaysPassed ++ ;
 		} else {
 			DayIndex ++ ;
 			DayEvent();
