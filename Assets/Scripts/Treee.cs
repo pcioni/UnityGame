@@ -9,7 +9,6 @@ public class Treee : MonoBehaviour {
 	public float x_scale;
 	public float y_scale;
 	public float z_scale;
-	float sink;
 	public float c;
 	public objectHighlightOnMouseover child;
 	public float TimeToGrow = 2f;
@@ -22,7 +21,6 @@ public class Treee : MonoBehaviour {
 	void Start () {
 		//tree = GameObject.Find ("tree");
 		time_passed = 0f;
-		sink = 0f;
 		total_time = 0f;
 	
 		/*
@@ -43,13 +41,6 @@ public class Treee : MonoBehaviour {
 				gameObject.transform.localScale += new Vector3 (x_scale * rate, y_scale * rate, z_scale * rate);
 				time_passed = 0f;
 				
-				if (gameObject.transform.localScale.y < (x_scale * c +1f)){
-					sink = gameObject.transform.localScale.y*3;
-				}else{
-					//sink = b;
-				}
-				
-				//tree.gameObject.transform.position -= new Vector3(0f,sink,0f);
 				
 			} else {
 				time_passed += Time.deltaTime;

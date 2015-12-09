@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Game_Time : MonoBehaviour {
 	float day_time;
-	int day,month,year,gift_counter;
+	int day;
 	public Text messages;
 	public Button accept;
 	string[] gifts;
@@ -13,9 +13,6 @@ public class Game_Time : MonoBehaviour {
 	void Start() {
 		day_time = 118f;
 		day = 1;
-		month = 12;
-		year = 2015;
-		gift_counter = 0;
 		gifts = new string[26];
 		gifts [0] = "";
 		gifts [1] = "Ornaments";

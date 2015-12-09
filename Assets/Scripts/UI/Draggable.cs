@@ -5,20 +5,6 @@ public class Draggable : MonoBehaviour {
 
     public GameObject ornament;
 
-	private Vector3 screenPoint;
-	private Vector3 offset;
-	private bool justCreated = true;
-
-	// Use this for initialization
-	void Start () {
-		screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-		offset = gameObject.transform.position -
-				 Camera.main.ScreenToWorldPoint(
-						new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z)
-				 );
-		justCreated = true;
-	}
-	
 	void Update() {
         if (Input.GetMouseButtonUp(0)) {
             if (GetComponent<Renderer>().enabled)

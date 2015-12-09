@@ -8,14 +8,12 @@ public class Tree_Grow: MonoBehaviour {
 	public float x_scale;
 	public float y_scale;
 	public float z_scale;
-	float sink;
 	public float c;
 	//public float b;
 	// Use this for initialization
 	void Start () {
 		tree = GameObject.Find ("tree");
 		time_passed = 0f;
-		sink = 0f;
 		total_time = 0f;
 	}
 	
@@ -26,14 +24,6 @@ public class Tree_Grow: MonoBehaviour {
 				
 				tree.gameObject.transform.localScale += new Vector3 (x_scale, y_scale, z_scale);
 				time_passed = 0f;
-				
-				if (tree.gameObject.transform.localScale.y < (x_scale * c +1f)){
-					sink = tree.gameObject.transform.localScale.y*3;
-				}else{
-					//sink = b;
-				}
-				
-				//tree.gameObject.transform.position -= new Vector3(0f,sink,0f);
 				
 			} else {
 				time_passed += Time.deltaTime;
