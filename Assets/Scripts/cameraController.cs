@@ -34,10 +34,16 @@ public class cameraController : MonoBehaviour {
 	 * Change the FOV instead of distance to avoid clipping through objects.
 	 */
 	void zoomInOut() {
+<<<<<<< HEAD
+		Vector3 moveDir = -(Input.GetAxis("Mouse ScrollWheel") * sensitivity) * transform.TransformDirection(new Vector3( 0, 0, -1)); 
+		transform.position += moveDir * Time.deltaTime; 
+=======
 		float fov = Camera.main.fieldOfView;
         distanceScale = Mathf.Min( 0.1f, Input.GetAxis("Mouse ScrollWheel") * -sensitivity );
 		Camera.main.fieldOfView = fov;
+>>>>>>> a3a60ca79128154214fffc812ceb2e263fba94f4
 	}
+
 
 	void LerpToTarget() {
 		Vector3 offset = orbitTarget.transform.position + orbitTarget.offsetFromCenter * orbitTarget.offsetScaling;
