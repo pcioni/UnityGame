@@ -68,6 +68,10 @@ public class TimeTillChristmas : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		win.gameObject.SetActive (false);
+		fail.gameObject.SetActive (false);
+
 		timer = GetComponent<Text>();
 		accept.gameObject.SetActive (false);
 		messages.gameObject.SetActive (false);
@@ -118,48 +122,63 @@ public class TimeTillChristmas : MonoBehaviour {
 	void Update () {
 
 		if (Input.GetKeyDown (KeyCode.J)) {
-			DaysPassed +=1;
+			DaysPassed += 1;
+			StartDay += 1;
 			StartHour = 8;
 			StartMinute = 0;
+	
+			if (StartDay < 24) {
+				DayEvent ();
+			} else {
+				if (tree.gameObject.transform.localScale.y >= 600) {
+					win.gameObject.SetActive (true);
+				} else {
+					fail.gameObject.SetActive (false);
+				}
+				Time.timeScale = 0.0f;
+			}
+		}
+
+		if (Time.timeScale == 0.0)
+			return;
+
+		if (DaysPassed == 0) {
 			DayEvent ();
-		}
-
-		if ( Time.timeScale == 0.0 )
-			return;
-
-		if ( DaysPassed == 0 ) {
-			DayEvent();
 			return;
 		}
+
+
 
 		StartMinute += Time.deltaTime * GameMinutesPerWorldSeconds;
-		while ( StartMinute >= 60.0 ) {
-			StartHour ++ ;
+		while (StartMinute >= 60.0) {
+			StartHour ++;
 			StartMinute -= 60.0;
-			if ( StartHour == 24 ) {
+			if (StartHour == 24) {
 				StartHour = 0;
-				StartDay ++ ;
-				if (StartDay<25){
-					DayEvent();
-				}else{
-					Time.timeScale = 0.0f;
-					if (tree.gameObject.transform.localScale.y >= 60){
-						win.gameObject.SetActive(true);
-					}
-					else{
-						fail.gameObject.SetActive(false);
-					}
+				StartDay ++;
+				if (StartDay < 25) {
+					DayEvent ();
+				} else {
 
-				}
-				if ( StartDay == monthLen[StartMonth] ) {
-					StartDay = 0;
-					StartMonth ++ ;
-					if ( StartMonth == 12 ) {
-						StartMonth = 0;
+					if (tree.gameObject.transform.localScale.y >= 600) {
+						win.gameObject.SetActive (true);
+					} else {
+						fail.gameObject.SetActive (false);
 					}
+					Time.timeScale = 0.0f;
+				}
+
+			}
+			if (StartDay == monthLen [StartMonth]) {
+				StartDay = 0;
+				StartMonth ++;
+				if (StartMonth == 12) {
+					StartMonth = 0;
 				}
 			}
 		}
+	
+		
 		int hrs = ( StartHour + 11 ) % 12 + 1;
 		int min = (int) StartMinute;
 		string working;
