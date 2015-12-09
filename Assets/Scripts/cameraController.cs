@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class cameraController : MonoBehaviour {
 	
@@ -39,7 +40,20 @@ public class cameraController : MonoBehaviour {
 
 	}
 
+	void checkAzimuthAgainstOrigin() {
+		var newModule = transform;
+		var forwardVectorToMatch = orbitTarget.transform.forward;
+		var correctiveRotation = Azimuth(forwardVectorToMatch) - Azimuth(orbitTarget.transform.forward);
+		newModule.RotateAround(orbitTarget.transform.position, Vector3.up, correctiveRotation);
+		var correctiveTranslation = transform.position - orbitTarget.transform.position;
+		transform.position += correctiveTranslation;
+	}
 
+	private static float Azimuth(Vector3 vector) {
+		return Vector3.Angle(Vector3.forward, vector) * Mathf.Sign(vector.x);
+	}
+
+	// initialize our lerp / slerp values and call the coroutine
 	void LerpToTarget() {
 		//keeps track of our lerp distance
 		endMarker = orbitTarget.transform;
