@@ -3,9 +3,10 @@ using System.Collections;
 
 public class workerController : MonoBehaviour {
 
-	private bool isSmacked = false;                 //use this to hook into the resource generation
+	public bool isSmacked = false;                 //use this to hook into the resource generation
 	private Color startColor;
 	public int chanceOfSpawning = 0;
+    private int health = 0;
 
 	IEnumerator wait() {
 		for (float f = 0.0f; f <= 1f; f += 1f) {
@@ -14,12 +15,20 @@ public class workerController : MonoBehaviour {
 	}
 
 	public void getWhipped() {
-		//turn him red and make him fall over
-		transform.Rotate(0, 90, 0);
-		transform.Rotate(0, -90, 0);
-		isSmacked = false;
-		GetComponent<Renderer>().material.color = startColor;
+        if (health > 0) {
+            health -= 1;
+
+        }
+        if (health == 0) {
+            returnToNeutral();
+        }
+        print("whipped");
 	}
+
+    void returnToNeutral() {
+        isSmacked = false;
+        GetComponent<Renderer>().material.color = startColor;
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +40,7 @@ public class workerController : MonoBehaviour {
 		int rand = Random.Range(0, chanceOfSpawning);
 		if (rand == 1) {
 			isSmacked = true;
+            health = 5;
 			GetComponent<Renderer>().material.color = Color.red;
 		}
 	}
