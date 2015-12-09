@@ -7,7 +7,7 @@ public class workerController : MonoBehaviour {
 	private Color startColor;
 	public int chanceOfSpawning = 0;
     private int health = 0;
-    Color damping = Color.red;
+    Color damping = Color.grey;
 
 	IEnumerator wait() {
 		for (float f = 0.0f; f <= 1f; f += 1f) {
