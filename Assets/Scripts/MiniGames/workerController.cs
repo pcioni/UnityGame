@@ -7,6 +7,7 @@ public class workerController : MonoBehaviour {
 	private Color startColor;
 	public int chanceOfSpawning = 0;
     private int health = 0;
+    Color damping = Color.red;
 
 	IEnumerator wait() {
 		for (float f = 0.0f; f <= 1f; f += 1f) {
@@ -17,12 +18,13 @@ public class workerController : MonoBehaviour {
 	public void getWhipped() {
         if (health > 0) {
             health -= 1;
-
+            damping.r = ( ( health / 10f) + 1) / 2 ;
+            GetComponent<Renderer>().material.color = damping;
+            print(health);
         }
         if (health == 0) {
             returnToNeutral();
         }
-        print("whipped");
 	}
 
     void returnToNeutral() {
@@ -31,19 +33,18 @@ public class workerController : MonoBehaviour {
         GetComponent<Renderer>().material.color = startColor;
     }
 
-	// Use this for initialization
 	void Start () {
 		startColor = GetComponent<Renderer>().material.color;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		int rand = Random.Range(0, chanceOfSpawning);
 		if (rand == 1) {
             isSmacked = true;
             gameObject.GetComponent<MiniGameActive>().IsActive = false;
-            health = 5;
-			GetComponent<Renderer>().material.color = Color.red;
+            health = 10;
+            damping.r = 1;
+            GetComponent<Renderer>().material.color = damping;
 		}
 	}
 }
