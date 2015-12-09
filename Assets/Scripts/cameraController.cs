@@ -20,7 +20,11 @@ public class cameraController : MonoBehaviour {
 	private Vector3 lerpVector;               // point on a line to lerp to.
 	
 	private bool canRotateCamera;             // don't allow rotation during Lerp / Slerp.
+<<<<<<< HEAD
+
+=======
 	
+>>>>>>> 1565ef156352f1db60708345851fc0dac76d1722
 	private Vector3 camSmoothDampV;
 
 	/*
